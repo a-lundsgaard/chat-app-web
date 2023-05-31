@@ -23,7 +23,7 @@ type ProxyResponse = Response & ServerResponse<IncomingMessage>
 
 export default (req: ProxyRequest, res: ProxyResponse) => {
 
-	return new Promise((resolve, reject): void => {
+	return new Promise<void>((resolve, reject): void => {
 		const pathname = url.parse(req.url).pathname
 		const isLogin = pathname === '/api/proxy/login'
 
