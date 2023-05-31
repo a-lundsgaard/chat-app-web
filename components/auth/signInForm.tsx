@@ -50,7 +50,7 @@ export default function SignInForm() {
             }
 
         } catch (error) {
-            console.log('error', error);
+            console.log('Ecountered error', error);
         }
     }
 

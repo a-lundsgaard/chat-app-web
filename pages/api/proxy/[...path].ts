@@ -27,11 +27,15 @@ export default (req: ProxyRequest, res: ProxyResponse) => {
 		const pathname = url.parse(req.url).pathname
 		const isLogin = pathname === '/api/proxy/login'
 
-		console.log('proxying', req.method, pathname, 'to', API_URL)
+		// console.log('proxying', req.method, pathname, 'to', API_URL)
 
 		const cookies = new Cookies(req, res)
 		const authToken = cookies.get('auth-token')
 		req.url = API_URL! // rewrite url
+		console.log('proxying', req.method, pathname, 'to', req.url)
+
+		// rewrite host name/ip
+		req.headers.host = "mychat-app-web.herokuapp.com"
 
 		// Don't forward cookies to API
 		req.headers.cookie = ''
@@ -52,6 +56,7 @@ export default (req: ProxyRequest, res: ProxyResponse) => {
 					proxyRes.on('end', () => {
 						try {
 							// const { authToken } = JSON.parse(responseBody)
+							console.log('got response', responseBody)
 							const data = JSON.parse(responseBody)
 
 							const token = data.data?.login?.token

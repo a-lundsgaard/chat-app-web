@@ -34,7 +34,9 @@ function makeClient() {
     });
 
     const wsLink = new GraphQLWsLink(createClient({
-        url: 'ws://localhost:4000/subscriptions',
+        // url: 'ws://localhost:4000/subscriptions',
+        url: 'ws://mychat-app-web.herokuapp.com/subscriptions',
+
         // url: 'ws://localhost:3000/api/subscribe',
         retryAttempts: 10, // if connection is lost, try to reconnect 10 times e.g. when browser refreshes
         shouldRetry(errOrCloseEvent) {
