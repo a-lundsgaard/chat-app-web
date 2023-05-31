@@ -31,7 +31,7 @@ export default function Chat({
     const [currentConversation, setConversation] = useState<Conversation>();
     const [allUsers, setAllUsers] = useState<User[]>([]);
 
-    const [sidebarVisible, setSidebarVisible] = useState(false);
+    const [sidebarVisible, setSidebarVisible] = useState(true);
 
 
     const { data: fetchedUsers, loading, error } = useQuery(GET_ALL_USERS);
