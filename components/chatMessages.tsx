@@ -138,13 +138,16 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ user, conversation, refresh
         <>
 
             {/* Chat header */}
-            <div className="flex items-center pb-3 mb-6 border-b-2">
+
+            {/* <div className={`flex items-center w-full pb-3 mb-6 border-b-2`}>
+
                 <div className="w-12 h-12 bg-gray-400 rounded-full"></div>
                 <div className="ml-4">
                     <div className="h-6 text-lg font-bold text-gray-800">{getConversationName()}</div>
-                    {/* <div className="w-24 h-4 mt-1 bg-gray-400"></div> */}
                 </div>
-            </div>
+
+            </div> */}
+
             <div className="flex flex-col space-y-4 overflow-y-scroll">
                 {messages.map((message) => (
 

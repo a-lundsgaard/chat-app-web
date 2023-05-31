@@ -31,6 +31,9 @@ export default function Chat({
     const [currentConversation, setConversation] = useState<Conversation>();
     const [allUsers, setAllUsers] = useState<User[]>([]);
 
+    const [sidebarVisible, setSidebarVisible] = useState(false);
+
+
     const { data: fetchedUsers, loading, error } = useQuery(GET_ALL_USERS);
 
     const { data: conversationData, loading: conversationLoading, error: conversationError, refetch: refetchConversations } = useQuery(GET_CONVERSATIONS, {
@@ -149,177 +152,140 @@ export default function Chat({
             });
             console.log('created new converasion', data?.createConversation);
             setAddedUsers([]);
-            // setConversation(data?.createConversation as Conversation);
-            // redirect to /chat on successful login
-            // if (data?.createConversation) {
-            //     // window.location.href = '/chat';
-            //     Router.push('/chat');
-            // }
         } catch (error) {
             console.log('error', error);
         }
     };
 
+    const getConversationName = () => {
+        if (currentConversation?.name) {
+            return currentConversation.name;
+        } else {
+            // set the name to the first user in the conversation
+            const firstUserId = currentConversation?.participantIds[0];
+            return "Ingen samtaler endnu"
+
+            // return firstUser?.username;
+        }
+    }
 
 
 
 
     return (
-        // <section className="bg-gradient-to-b from-gray-100 to-white">
-        //     <div className="max-w-6xl px-4 mx-auto sm:px-6">
-        //         <div className="pt-32 pb-12 md:pt-40 md:pb-20">
-
-        //             {/* Page header */}
-        //             <div className="max-w-3xl pb-12 mx-auto text-center md:pb-20">
-        //                 <h1 className="h1">Welcome back. {user.email}.</h1>
-        //             </div>
-
-        //         </div>
-        //     </div>
-        // </section>
-
         <div className="flex h-screen">
-            <div className="w-2/6 p-2 bg-gray-200 md:w-2/5 md:p-4">
-                {/* Logged-in user section */}
-                {/* Logged-in user section */}
-                <div className="flex items-center mt-auto mb-4 border-2 border-b-slate-50">
-                    <div className="flex items-center flex-grow mb-4">
-                        <div className="flex items-center flex-grow">
-                            <div className="w-8 h-8 bg-gray-400 rounded-full"></div>
-                            <div className="ml-2 text-gray-800">{user.username}</div>
+
+            {sidebarVisible && (
+                <div className={`${sidebarVisible ? "w-4/6" : "w-2/6"} p-2 bg-gray-200 sm:w-1/2 md:w-3/5 md:p-4`}>
+                    {/* Logged-in user section */}
+                    {/* Logged-in user section */}
+                    <div className="flex items-center mt-auto mb-4 border-2 border-b-slate-50">
+                        <div className="flex items-center flex-grow mb-4">
+                            <div className="flex items-center flex-grow">
+                                <div className="w-8 h-8 bg-gray-400 rounded-full"></div>
+                                <div className="ml-2 text-gray-800">{user.username}</div>
+                            </div>
+                            <button
+                                onClick={handleLogout}
+                                className="px-4 py-2 ml-auto text-white rounded-md bg-slate-400"
+                            >
+                                Logout
+                            </button>
                         </div>
-                        <button
-                            onClick={handleLogout}
-                            className="px-4 py-2 ml-auto text-white rounded-md bg-slate-400"
-                        >
-                            Logout
-                        </button>
                     </div>
-                </div>
 
 
-                {/* Search bar */}
-                <div className="mb-4">
-                    <input
-                        type="text"
-                        value={searchText}
-                        onChange={handleSearchChange}
-                        className="w-full px-4 py-2 border border-gray-400 rounded-lg"
-                        placeholder="Search users"
-                    />
-                </div>
+                    {/* Search bar */}
+                    <div className="mb-4">
+                        <input
+                            type="text"
+                            value={searchText}
+                            onChange={handleSearchChange}
+                            className="w-full px-4 py-2 border border-gray-400 rounded-lg"
+                            placeholder="Search users"
+                        />
+                    </div>
 
-                {/* Search results */}
-                {/*  */}
-                {/* <div className='w-20' > */}
-                {filteredUsers.length > 0 && searchText.length > 0 && (
-                    <div className="absolute w-1/4 bg-white border border-gray-400 rounded-lg shadow-md ">
-                        {filteredUsers.map((user) => (
+                    {/* Search results */}
+                    {filteredUsers.length > 0 && searchText.length > 0 && (
+                        <div className="absolute w-1/4 bg-white border border-gray-400 rounded-lg shadow-md ">
+                            {filteredUsers.map((user) => (
+                                <div
+                                    key={user.id}
+                                    className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                                    onClick={() => handleUserClick(user)}
+                                >
+                                    {user.username}
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Added users */}
+                    <div className={`flex flex-wrap flex-row ${addedUsers.length ? "mb-4" : ""} `} >
+                        {addedUsers.map((user) => (
                             <div
                                 key={user.id}
-                                className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                                onClick={() => handleUserClick(user)}
+                                className="flex items-center px-3 py-1 mr-2 bg-green-500 rounded-lg"
                             >
-                                {user.username}
+                                <span className="mr-1 text-white ">{user.username}</span>
+                                <button
+                                    className="font-bold text-white"
+                                    onClick={() => handleUserRemove(user)}
+                                >
+                                    x
+                                </button>
                             </div>
                         ))}
                     </div>
-                )}
 
-                {/* </div> */}
-
-                {/* Added users */}
-                <div className={`flex flex-wrap flex-row ${addedUsers.length ? "mb-4" : ""} `} >
-                    {addedUsers.map((user) => (
-                        <div
-                            key={user.id}
-                            className="flex items-center px-3 py-1 mr-2 bg-green-500 rounded-lg"
-                        >
-                            <span className="mr-1 text-white ">{user.username}</span>
-                            <button
-                                className="font-bold text-white"
-                                onClick={() => handleUserRemove(user)}
-                            >
-                                x
-                            </button>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Add new conversation button */}
-                <div className="flex items-center justify-center h-12 text-white bg-blue-500 rounded-md cursor-pointer"
-                    // onClick={handleUserClick}
-                    onClick={handleCreateConversation}
-                >
-                    Start New Conversation
-                </div>
+                    {/* Add new conversation button */}
+                    <div className="flex items-center justify-center h-12 text-white bg-blue-500 rounded-md cursor-pointer"
+                        // onClick={handleUserClick}
+                        onClick={handleCreateConversation}
+                    >
+                        Start New Conversation
+                    </div>
 
 
 
 
 
-                {/* Conversation list */}
-                <div className='' >
-                    {
-                        conversationData?.getAllConversationsByUserId.map((conversation) => (
-                            <div key={conversation.id} className={` flex items-center cursor-pointer px-2 py-2 mt-4 mb-6 ${conversation.id === currentConversation?.id && "bg-gray-100 rounded-lg"}`}
-                                onClick={() => setConversation(conversation)}
-                            >
-                                <div className="w-12 h-12 bg-gray-400 rounded-full"></div>
-                                <div className="ml-4">
-                                    <div className="h-6 text-lg font-bold text-gray-800 whitespace-nowrap"> {conversation.name}</div>
-                                    <div className="w-12 h-4 ">Beskeder</div>
+                    {/* Conversation list */}
+                    <div className='' >
+                        {
+                            conversationData?.getAllConversationsByUserId.map((conversation) => (
+                                <div key={conversation.id} className={` flex items-center cursor-pointer px-2 py-2 mt-4 mb-6 ${conversation.id === currentConversation?.id && "bg-gray-100 rounded-lg"}`}
+                                    onClick={() => setConversation(conversation)}
+                                >
+                                    <div className="w-12 h-12 bg-gray-400 rounded-full"></div>
+                                    <div className="ml-4">
+                                        <div className="h-6 text-lg font-bold text-gray-800 whitespace-nowrap"> {conversation.name}</div>
+                                        <div className="w-12 h-4 ">Beskeder</div>
+                                    </div>
                                 </div>
-                            </div>
-                        ))
-                    }
-                </div>
-
-
-                {/* <div className="flex items-center mt-4 mb-4">
-                    <div className="w-12 h-12 bg-gray-400 rounded-full"></div>
-                    <div className="ml-4">
-                        <div className="w-24 h-6 bg-gray-400"></div>
-                        <div className="w-12 h-4 mt-1 bg-gray-400"></div>
+                            ))
+                        }
                     </div>
                 </div>
 
-                <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-gray-400 rounded-full"></div>
+            )}
+
+            {/* Chat messages */}
+            {/* header */}
+            <div className="flex flex-col w-full h-screen p-4 bg-white">
+
+                <div className={`flex items-center w-full pb-3 mb-6 border-b-2`}>
+
+                    <div className="w-12 h-12 bg-gray-400 rounded-full"
+
+                        onClick={() => setSidebarVisible(!sidebarVisible)}
+                    ></div>
                     <div className="ml-4">
-                        <div className="w-24 h-6 bg-gray-400"></div>
-                        <div className="w-12 h-4 mt-1 bg-gray-400"></div>
+                        <div className="h-6 text-lg font-bold text-gray-800">{getConversationName()}</div>
                     </div>
-                </div> */}
-            </div>
 
-
-            <div className="flex flex-col w-3/4 p-4 bg-white ">
-                {/* Chat header */}
-
-
-                {/* Chat messages */}
-
-                {/* other users */}
-                {/* <div className="flex flex-col space-y-4"> */}
-                {/* <div className="flex items-start">
-                        <div className="w-8 h-8 bg-gray-400 rounded-full"></div>
-                        <div className="p-2 ml-2 bg-gray-200 rounded-lg">
-                            <div className="w-40 h-6 bg-gray-400"></div>
-                            <div className="h-6 mt-1 bg-gray-400 w-60"></div>
-                        </div>
-                    </div> */}
-
-                {/* logged in user */}
-                {/* <div className="flex items-end justify-end">
-                        <div className="p-2 bg-blue-500 rounded-lg">
-                            <div className="w-40 h-6 bg-gray-400"></div>
-                            <div className="h-6 mt-1 bg-gray-400 w-60"></div>
-                        </div>
-                        <div className="w-8 h-8 ml-2 bg-gray-400 rounded-full"></div>
-                    </div> */}
-                {/* </div> */}
-
+                </div>
                 <ChatMessages
                     conversation={currentConversation} user={user}
                     refreshConversation={(b) => {
@@ -331,21 +297,6 @@ export default function Chat({
                     }}
 
                 />
-
-
-                {/* Message input */}
-                {/* <div className="mt-auto ">
-                    <div className="flex items-center">
-                        <input
-                            type="text"
-                            className="flex-1 px-4 py-2 border border-gray-400 rounded-l-lg"
-                            placeholder="Type a message..."
-                        />
-                        <button className="px-4 py-2 ml-2 text-white bg-blue-500 rounded-r-lg">
-                            Send
-                        </button>
-                    </div>
-                </div> */}
             </div>
         </div>
     )
