@@ -320,6 +320,7 @@ export async function getServerSideProps({ req, res }: GetServerSidePropsContext
         const user = await verifyUser({ req, res })
         return { props: { user: user } }
     } catch (err) {
+        //test
         console.error('got error', err)
         return { props: { initialLoginStatus: 'Not logged in' } }
     }
