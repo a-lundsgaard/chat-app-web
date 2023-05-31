@@ -183,7 +183,7 @@ export default function Chat({
                         <div className="flex items-center flex-grow mb-4">
                             <div className="flex items-center flex-grow">
                                 <div className="w-8 h-8 bg-gray-400 rounded-full"></div>
-                                <div className="ml-2 text-gray-800">{user.username}</div>
+                                <div className="ml-2 text-lg text-gray-800">{user.username}</div>
                             </div>
                             <button
                                 onClick={handleLogout}
