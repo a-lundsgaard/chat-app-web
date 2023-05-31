@@ -274,11 +274,8 @@ export default function Chat({
             {/* Chat messages */}
             {/* header */}
             <div className="flex flex-col w-full h-screen p-4 bg-white">
-
                 <div className={`flex items-center w-full pb-3 mb-6 border-b-2`}>
-
-                    <div className="w-12 h-12 bg-gray-400 rounded-full"
-
+                    <div className="w-12 h-12 bg-gray-400 rounded-full cursor-pointer"
                         onClick={() => setSidebarVisible(!sidebarVisible)}
                     ></div>
                     <div className="ml-4">
