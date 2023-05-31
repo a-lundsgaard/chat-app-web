@@ -69,6 +69,7 @@ export default function SignInForm() {
                         id="email" type="email" className="w-full text-gray-800 form-input" placeholder="Enter your email address" required />
                 </div>
             </div>
+
             <div className="flex flex-wrap mb-4 -mx-3">
                 <div className="w-full px-3">
                     <div className="flex justify-between">

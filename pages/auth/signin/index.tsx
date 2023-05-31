@@ -27,14 +27,8 @@ export default function SignIn() {
 
                         <SignInForm />
 
-                        {/* <div className="flex items-center my-6">
-                <div className="mr-3 border-t border-gray-300 grow" aria-hidden="true"></div>
-                <div className="italic text-gray-600">Or</div>
-                <div className="ml-3 border-t border-gray-300 grow" aria-hidden="true"></div>
-              </div> */}
-
                         <div className="mt-6 text-center text-gray-600">
-                            Don't you have an account? <Link href="/signup" className="text-blue-600 transition duration-150 ease-in-out hover:underline">Sign up</Link>
+                            Don't you have an account? <Link href="/auth/signup" className="text-blue-600 transition duration-150 ease-in-out hover:underline">Sign up</Link>
                         </div>
                     </div>
 
