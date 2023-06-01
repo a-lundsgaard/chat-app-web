@@ -7,7 +7,7 @@ import { IncomingMessage, ServerResponse } from 'http'
 // applications, you might want to get it from 'next/config' instead.
 // const API_URL = process.env.API_URL
 
-const API_URL = process.env.API_URL // graphql endpoint
+const API_URL = process.env.NEXT_PUBLIC_API_URL // graphql endpoint
 
 
 const proxy = httpProxy.createProxyServer()
@@ -23,19 +23,17 @@ type ProxyResponse = Response & ServerResponse<IncomingMessage>
 
 export default (req: ProxyRequest, res: ProxyResponse) => {
 
-	return new Promise<void>((resolve, reject): void => {
+	return new Promise<void>((resolve, reject) => {
 		const pathname = url.parse(req.url).pathname
 		const isLogin = pathname === '/api/proxy/login'
-
-		// console.log('proxying', req.method, pathname, 'to', API_URL)
 
 		const cookies = new Cookies(req, res)
 		const authToken = cookies.get('auth-token')
 		req.url = API_URL! // rewrite url
-		console.log('proxying', req.method, pathname, 'to', req.url)
 
 		// rewrite host name/ip
-		req.headers.host = "mychat-app-web.herokuapp.com"
+		const domainName = (API_URL!).match(/(?<=\/\/)[^/]+/)?.[0];
+		req.headers.host = domainName || req.headers.host;
 
 		// Don't forward cookies to API
 		req.headers.cookie = ''
@@ -70,9 +68,6 @@ export default (req: ProxyRequest, res: ProxyResponse) => {
 
 							// get data from graphql
 							console.log('got graphql data!', data.data)
-
-							// res.status(200).json(data)
-
 							res.statusCode = 200
 							res.setHeader('Content-Type', 'application/json')
 							res.end(JSON.stringify(data))
