@@ -45,7 +45,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ user, conversation, refresh
     const scrollToBottom = (smooth?: boolean) => {
         const ref = messagesEndRef?.current;
         if (ref) {
-            smooth ? ref.scrollIntoView({ behavior: "smooth" }) : ref.scrollIntoView({});
+            smooth ? ref.scrollIntoView({ behavior: "smooth" }) : ref.scrollIntoView();
         }
     }
 
