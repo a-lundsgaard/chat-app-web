@@ -32,11 +32,12 @@ export default (req: ProxyRequest, res: ProxyResponse) => {
 		req.url = API_URL! // rewrite url
 
 		// rewrite host name/ip
+		console.log('api url', API_URL)
 		const domainName = (API_URL!).match(/(?<=\/\/)[^/]+/)?.[0];
 		req.headers.host = domainName || req.headers.host;
 
 		// Don't forward cookies to API
-		req.headers.cookie = ''
+		// req.headers.cookie = ''
 
 		// Set auth-token header from cookie
 		if (authToken) {
@@ -63,7 +64,14 @@ export default (req: ProxyRequest, res: ProxyResponse) => {
 							const cookies = new Cookies(req, res)
 							cookies.set('auth-token', token, {
 								httpOnly: true,
+								sameSite: false,
+								// secure: true,
+								// only enabe for production
+								// sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+								// secure: process.env.NODE_ENV === 'production',
+								// se
 								// sameSite: 'lax', // CSRF protection
+								// SameSite='None'
 							})
 
 							// get data from graphql

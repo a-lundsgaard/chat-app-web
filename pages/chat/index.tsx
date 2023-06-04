@@ -173,7 +173,7 @@ export default function Chat({
 
 
     return (
-        <div className="flex h-screen">
+        <div className="flex h-screen overflow-y-hidden">
 
             {sidebarVisible && (
                 <div className={`${sidebarVisible ? "w-4/6" : "w-2/6"} p-2 bg-gray-200 sm:w-1/2 md:w-3/5 md:p-4`}>
@@ -273,7 +273,7 @@ export default function Chat({
 
             {/* Chat messages */}
             {/* header */}
-            <div className="flex flex-col w-full h-screen p-4 bg-white">
+            <div className="flex flex-col w-full h-screen p-4 overflow-y-hidden bg-white">
                 <div className={`flex items-center w-full pb-3 mb-6 border-b-2`}>
                     <div className="w-12 h-12 bg-gray-400 rounded-full cursor-pointer"
                         onClick={() => setSidebarVisible(!sidebarVisible)}

@@ -1,5 +1,3 @@
-"use client";
-
 import {
     ApolloClient,
     ApolloLink,
@@ -35,7 +33,7 @@ function makeClient() {
 
     const httpLink = new HttpLink({
         uri: DEFAULT_GATEWAY,
-        credentials: 'include'
+        credentials: 'include',
     });
 
     const wsLink = new GraphQLWsLink(createClient({
@@ -44,14 +42,6 @@ function makeClient() {
         url: WS_ENDPOINT,
         // url: 'ws://localhost:3000/api/subscribe',
         retryAttempts: 10, // if connection is lost, try to reconnect 10 times e.g. when browser refreshes
-        shouldRetry(errOrCloseEvent) {
-            if (errOrCloseEvent instanceof CloseEvent) {
-                // retry connection only if network error
-                return errOrCloseEvent.code >= 4000 || errOrCloseEvent.code < 5000;
-            }
-            // return true;
-            return true;
-        },
 
     }));
 
