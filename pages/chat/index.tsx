@@ -1,19 +1,12 @@
-// write quick page
-
-// import type { NextPageWithLayout } from './_app';
 import { useEffect, useState } from 'react';
 import type { ReactElement } from 'react';
-import { NextPageWithLayout } from '../_app';
 import Head from 'next/head';
 import Router from 'next/router';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_ALL_USERS, GET_CONVERSATIONS } from '@/graphql/graphqlQueries';
 import { CREATE_CONVERSATION } from '@/graphql/graphqlMutations';
 import ChatMessages from '@/components/chatMessages';
-
 import { GetServerSidePropsContext } from 'next';
-// import { cookies } from 'next/dist/client/components/headers';
-// import { Conversation, User, UserResponsObject } from '@/graphql/__generated__/graphql';
 import { Conversation, User, UserResponsObject } from '@/graphql/__generated__/graphql';
 import verifyUser from '@/lib/verifyUser';
 
@@ -44,8 +37,6 @@ export default function Chat({
 
     if (conversationError) {
         console.error('conversationError', conversationError);
-        // refresh page
-        // window.location.href = '/chat';
     }
 
     // create conversation
@@ -64,21 +55,13 @@ export default function Chat({
     }, [fetchedUsers]);
 
     useEffect(() => {
-
         console.log('got conversation data', conversationData);
-
         if (conversationData) {
-            // const users = data?.getAllUsers
-            // filter out the logged-in user
-            // const users = data?.getAllUsers.filter((u) => u.id !== user.id);
             console.log('got conversation data', conversationData?.getAllConversationsByUserId);
             if (conversationData?.getAllConversationsByUserId.length > 0 && !currentConversation) {
                 const c = conversationData?.getAllConversationsByUserId[0];
                 setConversation(c);
             }
-
-            // setCurrentConversation(conversationData?.getAllConversationsByUserId[0]);
-            // setAllUsers(users);
         }
     }, [conversationData]);
 
@@ -161,11 +144,7 @@ export default function Chat({
         if (currentConversation?.name) {
             return currentConversation.name;
         } else {
-            // set the name to the first user in the conversation
-            const firstUserId = currentConversation?.participantIds[0];
             return "Ingen samtaler endnu"
-
-            // return firstUser?.username;
         }
     }
 
@@ -177,7 +156,6 @@ export default function Chat({
 
             {sidebarVisible && (
                 <div className={`${sidebarVisible ? "w-4/6" : "w-2/6"} p-2 bg-gray-200 sm:w-1/2 md:w-3/5 md:p-4`}>
-                    {/* Logged-in user section */}
                     {/* Logged-in user section */}
                     <div className="flex items-center mt-auto mb-4 border-2 border-b-slate-50">
                         <div className="flex items-center flex-grow mb-4">
@@ -241,7 +219,6 @@ export default function Chat({
 
                     {/* Add new conversation button */}
                     <div className="flex items-center justify-center h-12 text-white bg-blue-500 rounded-md cursor-pointer"
-                        // onClick={handleUserClick}
                         onClick={handleCreateConversation}
                     >
                         Start New Conversation
@@ -317,7 +294,6 @@ export async function getServerSideProps({ req, res }: GetServerSidePropsContext
         const user = await verifyUser({ req, res })
         return { props: { user: user } }
     } catch (err) {
-        //test
         console.error('got error', err)
         return { props: { initialLoginStatus: 'Not logged in' } }
     }
