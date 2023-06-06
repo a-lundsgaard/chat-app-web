@@ -150,13 +150,12 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ user, conversation, refresh
 
             <div className="flex flex-col space-y-4 overflow-y-scroll">
                 {messages.map((message) => (
-
                     <div key={message.id} >
                         {message.user_id === user.id ? (
                             <div className="flex items-end justify-end" >
                                 <div className="p-2 bg-blue-500 rounded-lg">
-                                    <div className="h-6 font-bold text-slate-200">{message.username + " (mig)"}</div>
-                                    <div className="h-6 mt-1 text-white w-60">{message.content}</div>
+                                    <div className="h-6 font-bold text-slate-100">{message.username + " (me)"}</div>
+                                    <div className="mt-1 text-white w-60">{message.content}</div>
                                 </div>
                                 <div className="w-8 h-8 ml-2 bg-gray-400 rounded-full"></div>
                             </div>
@@ -165,7 +164,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ user, conversation, refresh
                                 <div className="w-8 h-8 bg-gray-400 rounded-full"></div>
                                 <div className="p-2 ml-2 bg-gray-200 rounded-lg">
                                     <div className="w-40 h-6 font-bold text-gray-800">{message.username}</div>
-                                    <div className="h-6 mt-1 text-gray-600 w-60">{message.content}</div>
+                                    <div className="mt-1 text-gray-600 w-60">{message.content}</div>
                                 </div>
                             </div>
                         )}
