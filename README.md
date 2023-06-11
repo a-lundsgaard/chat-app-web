@@ -30,3 +30,14 @@ The backend can be found at [chat-app-api](https://github.com/a-lundsgaard/chat-
 ## Demo
 
 A live demo of the app can be found [my-chat.herokuapp.com](https://my-chat.herokuapp.com/). The demo is currently hosted on a Heroku dyno, so it may take a while to load (about 30 seconds).
+
+### How to use
+
+1. Create a user
+2. Login
+3. Create a chat by searching for a user and adding them to a chat
+4. Click start chat
+
+Now open a new incognito window and repeat the steps above with a different user. It is important that is incognito so a new cookie is created for the other user.
+
+ Now you can chat between the two users with realtime updates!
