@@ -7,7 +7,6 @@ import { GET_CONVERSATION_MESSAGES, IS_ME } from '@/graphql/graphqlQueries';
 import { CREATE_MESSAGE } from '@/graphql/graphqlMutations';
 
 type ChatMessagesProps = {
-    // messages: Message[];
     user: UserResponsObject
     conversation?: Conversation
     refreshConversation: (n: boolean) => void
@@ -117,18 +116,6 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ user, conversation, refresh
         }
     }
 
-    const getConversationName = () => {
-        if (conversation?.name) {
-            return conversation.name;
-        } else {
-            // set the name to the first user in the conversation
-            const firstUserId = conversation?.participantIds[0];
-            return "Ingen samtaler endnu"
-
-            // return firstUser?.username;
-        }
-    }
-
 
 
 
@@ -137,16 +124,6 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ user, conversation, refresh
     return (
         <>
 
-            {/* Chat header */}
-
-            {/* <div className={`flex items-center w-full pb-3 mb-6 border-b-2`}>
-
-                <div className="w-12 h-12 bg-gray-400 rounded-full"></div>
-                <div className="ml-4">
-                    <div className="h-6 text-lg font-bold text-gray-800">{getConversationName()}</div>
-                </div>
-
-            </div> */}
 
             <div className="flex flex-col space-y-4 overflow-y-scroll">
                 {messages.map((message) => (
