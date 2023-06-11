@@ -1,19 +1,9 @@
-import { useEffect } from 'react'
-import Router from 'next/router'
-import { useQuery } from '@apollo/client'
-// import { parseCookies } from 'nookies';
-// import { IS_ME } from '@/app/graphql/graphqlQueries'
-import { IS_ME } from '@/graphql/graphqlQueries'
 import axios from 'axios'
-
 import { GetServerSidePropsContext } from 'next';
+import Cookies from 'cookies'
+import { UserResponsObject } from '@/graphql/__generated__/graphql'
 
 const API_URL = process.env.NEXT_PUBLIC_DEFAULT_GATEWAY;
-
-
-import Cookies from 'cookies'
-// import { UserResponsObject } from '@/graphql/__generated__/graphql'
-import { UserResponsObject } from '@/graphql/__generated__/graphql'
 
 export default async function verifyUser({
     req,

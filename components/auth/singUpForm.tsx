@@ -1,12 +1,9 @@
-'use client'
-
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router';
 
 import { useMutation } from '@apollo/client';
 // import { SIGNIN_USER, REGISTER_USER } from '@/app/graphql/graphqlMutations';
 import { REGISTER_USER } from '@/graphql/graphqlMutations';
-import useUser from '@/lib/useUser';
 
 export default function SignUpForm() {
 
@@ -17,20 +14,12 @@ export default function SignUpForm() {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
 
-    const { user } = useUser();
-
-    useEffect(() => {
-        console.log('user from visit sign up', user);
-    }, [user]);
-
     if (loading) {
         console.log('loading');
     }
 
     const handleRegister = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
-        console.log('email', username);
-
         try {
             const { data } = await registerUser({
                 variables: {
