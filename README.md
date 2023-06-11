@@ -4,20 +4,22 @@ A secure chat app application using HTTP-only cookies for authentication with Ne
 
 ## Run the project
 
-To run this project you must install node.js (latest recommended)
+To run this project you must install node.js (latest recommended) and npm should come with it. You can also use yarn instead of npm.
+
+If using npm you should remove the `yarn.lock` file.
 
 1. Make sure to create the .env.local file with the correct variables at the root of the project
 2. Navigate to the root of the project
 3. Install the project dependencies:
 
 ```zsh
-yarn install
+npm install
 ```
 
 4. Run the project:
 
 ```zsh
-yarn dev
+npm run dev
 ```
 
 The project should now be running at `http://localhost:3000`
