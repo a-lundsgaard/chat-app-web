@@ -18,11 +18,6 @@ export default async function verifyUser({
     redirectIfFound?: boolean,
     isSubscribe?: boolean
 }) {
-
-
-    // console.log("req headers", req?.headers)
-
-    // console.log('å query: ', query)
     const cookies = new Cookies(req, res)
     const authToken = cookies.get('auth-token') || ''
 
@@ -57,18 +52,11 @@ export default async function verifyUser({
                 }
             }
 
-
-            console.log('got user data for auth: ', data.data.isMe)
-
             const user = data?.data?.isMe
 
             if (!user?.isLoggedIn) {
                 console.log('user not logged in')
                 res.setHeader('Location', '/auth/signin');
-
-                // set user on header
-                // res.setHeader('user', JSON.stringify(user));
-
                 res.statusCode = 302;
                 res.end();
             }
