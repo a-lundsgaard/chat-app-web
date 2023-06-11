@@ -37,6 +37,6 @@ A live demo of the app can be found [my-chat.herokuapp.com](https://my-chat.hero
 2. Login
 3. Create a chat by searching for a username and adding them to a chat
 4. Click start conversation
-5. Now open a new incognito window and repeat the steps above with a different user. It is important that is incognito so a new cookie is created for the other user.
+5. Now open a new incognito window and repeat the steps above with a different user. Incognito is necessary as a new cookie is then created for the other user.
 
 Now you can chat between the two users with realtime updates!
