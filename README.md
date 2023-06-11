@@ -26,3 +26,7 @@ The project should now be running at `http://localhost:3000`
 ## Backend
 
 The backend can be found at [chat-app-api](https://github.com/a-lundsgaard/chat-app-api)
+
+## Demo
+
+A live demo of the app can be found [my-chat.herokuapp.com](https://my-chat.herokuapp.com/). The demo is currently hosted on a Heroku dyno, so it may take a while to load (about 30 seconds).
